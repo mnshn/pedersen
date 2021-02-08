@@ -1,0 +1,1 @@
+{"rustc":14088978341743255589,"features":"[]","target":1899710773194115655,"profile":1613559695681135254,"path":10872709659218687626,"deps":[[12803655999746342204,"curve25519_dalek",false,12377426157250485494]],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/pedersen-1efe6a6489e32b13/dep-lib-pedersen"}}],"rustflags":[],"metadata":15990906187758009556,"config":0}
