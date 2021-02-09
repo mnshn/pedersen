@@ -10,11 +10,14 @@ pub mod commit;
 //----------------
 
 // the module that handles the steps of the Pedersen protocol
+pub(crate) mod errors;
 pub(crate) mod protocol;
 
-pub(crate) mod errors;
+//----------------
+// external crates
+//----------------
 
 // the elliptic curve module
-use curve25519_dalek;
-use digest;
-use sha3;
+extern crate curve25519_dalek;
+// randum number generator
+extern crate rand_core;
