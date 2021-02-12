@@ -11,7 +11,7 @@ the committer. Or at least: The commiter can not know **log_G(H)**.
 
 **Commiter**: 
 
-Given D and a message m on C, commiter commits to c as follows:
+Given D and a message m on C, commiter commits to m as follows:
 
 *Commit phase*:
 1. Picks a random scalar b that's smaller than the order of the group associated with C.
