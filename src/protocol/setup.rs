@@ -18,13 +18,10 @@ impl Setup {
     fn default() -> SetupResult<Self> {
         let mut rng = OsRng;
         let factor: Scalar = Scalar::random(&mut rng);
-        match factor {
-            factor if factor == Scalar::one() => Err(CommitError::Setup),
-            _ => Ok(Setup {
-                generator_G: RISTRETTO_BASEPOINT_POINT,
-                generator_H: factor * RISTRETTO_BASEPOINT_POINT,
-            }),
-        }
+        Ok(Setup {
+            generator_G: RISTRETTO_BASEPOINT_POINT,
+            generator_H: factor * RISTRETTO_BASEPOINT_POINT,
+        })
     }
 }
 
@@ -37,5 +34,8 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_setup() {}
+    fn test_setup() {
+        let setup = setup();
+        assert_eq!(setup.generator_G, RISTRETTO_BASEPOINT_POINT);
+    }
 }

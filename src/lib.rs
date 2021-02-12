@@ -19,5 +19,7 @@ pub(crate) mod protocol;
 
 // the elliptic curve module
 extern crate curve25519_dalek;
+// random nr generator
 extern crate rand_core;
+// hash
 extern crate sha2;
