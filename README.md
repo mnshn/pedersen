@@ -15,11 +15,11 @@ Given D and a message m on C, commiter commits to m as follows:
 
 *Commit phase*:
 1. Picks a random scalar b that's smaller than the order of the group associated with C.
-2. Makes public c = m*G + b*H
+2. Makes public c = mG + bH
 
 *Open phase*:
 1. Makes public (m,b)
 
 **Verifier**:
 
-1. Given (c,m,b) checks that indeed c = m*G + b*H
+1. Given (c,m,b) checks that indeed c = mG + bH
