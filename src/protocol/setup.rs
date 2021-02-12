@@ -10,9 +10,8 @@ pub type SetupResult<Setup> = Result<Setup, CommitError>;
 #[derive(Copy, Clone, Debug)]
 #[allow(non_snake_case)]
 pub struct Setup {
-    generator_G: RistrettoPoint,
-    generator_H: RistrettoPoint,
-    factor: Scalar,
+    pub generator_G: RistrettoPoint,
+    pub generator_H: RistrettoPoint,
 }
 
 impl Setup {
@@ -24,7 +23,6 @@ impl Setup {
             _ => Ok(Setup {
                 generator_G: RISTRETTO_BASEPOINT_POINT,
                 generator_H: factor * RISTRETTO_BASEPOINT_POINT,
-                factor,
             }),
         }
     }
@@ -39,8 +37,5 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_setup() {
-        let setup = setup();
-        assert_eq!(setup.generator_H, setup.factor * setup.generator_G)
-    }
+    fn test_setup() {}
 }

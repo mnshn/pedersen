@@ -8,5 +8,5 @@ edition = "2018"
 
 [dependencies]
 curve25519-dalek = { version = "3" }
-sha3 = "0.8"
+sha2 = "0.9.3"
 rand_core = "0.5.1"
