@@ -3,7 +3,7 @@
 //---------------
 
 // the main commitment module
-pub mod commit;
+// pub mod commit;
 
 //----------------
 // private modules
@@ -14,12 +14,12 @@ pub(crate) mod errors;
 pub(crate) mod protocol;
 
 //----------------
-// external crates
+// external crates for TESTING
 //----------------
 
-// the elliptic curve module
+// an elliptic curve module
 extern crate curve25519_dalek;
-// random nr generator
+// a random nr generator
 extern crate rand_core;
-// hash
+// a hash
 extern crate sha2;
