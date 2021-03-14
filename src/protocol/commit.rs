@@ -1,9 +1,13 @@
-use crate::protocol::setup::{Group, Scalar, SetupData};
+use crate::protocol::setup::SetupData;
+use crate::traits::{Group, Scalar};
 use digest::Digest;
 use rand_core::{CryptoRng, RngCore};
-use std::ops::{Add, Mul};
 
-pub struct Commitment<T, K> {
+pub struct Commitment<T, K>
+where
+    T: Group,
+    K: Scalar<T>,
+{
     commitment: T,
     salt: K,
     message: K,
@@ -11,14 +15,11 @@ pub struct Commitment<T, K> {
 
 impl<T, K> Commitment<T, K>
 where
-    T: Add<T, Output = T> + Mul<K> + Default + Group,
-    K: Default + Mul<T> + Mul<T, Output = T> + Scalar + Copy,
+    T: Group,
+    K: Scalar<T>,
 {
-    fn new<R: RngCore + CryptoRng, D: Digest<OutputSize = u64>>(
-        message: Vec<u8>,
-        rng: &mut R,
-    ) -> Self {
-        let message_as_scalar: K = K::from_bytes::<D>(message);
+    fn new<R: RngCore + CryptoRng>(message: Vec<u8>, rng: &mut R) -> Self {
+        let message_as_scalar: K = K::from_bytes(message);
         let setup_data = SetupData::<T, K>::new(rng);
         let salt = K::random(rng);
         Commitment {

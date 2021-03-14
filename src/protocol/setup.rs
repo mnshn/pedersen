@@ -1,21 +1,13 @@
-use digest::Digest;
 use std::marker::PhantomData;
-use std::ops::{Add, Mul};
+
+use crate::traits::{Group, Scalar};
 
 use rand_core::{CryptoRng, RngCore};
 
-pub trait Scalar {
-    fn random<R: RngCore + CryptoRng>(rng: &mut R) -> Self;
-    fn from_bytes<D: Digest<OutputSize = u64>>(bytes: Vec<u8>) -> Self;
-}
-pub trait Group {
-    fn random<R: RngCore + CryptoRng>(rng: &mut R) -> Self;
-    fn generator() -> Self;
-}
-
 pub struct SetupData<T, K>
 where
-    T: Add<T, Output = T> + Default,
+    T: Group,
+    K: Scalar<T>,
 {
     pub g: T,
     pub h: T,
@@ -24,8 +16,8 @@ where
 
 impl<T, K> Default for SetupData<T, K>
 where
-    T: Add<T, Output = T> + Default + Mul<K>,
-    K: Default + Mul<T> + Mul<T, Output = T> + Scalar,
+    T: Group,
+    K: Scalar<T>,
 {
     fn default() -> Self {
         SetupData {
@@ -38,8 +30,8 @@ where
 
 impl<T, K> SetupData<T, K>
 where
-    T: Add<T, Output = T> + Default + Mul<K> + Group,
-    K: Default + Mul<T> + Mul<T, Output = T> + Scalar,
+    T: Group,
+    K: Scalar<T>,
 {
     pub fn new<R: RngCore + CryptoRng>(rng: &mut R) -> Self {
         SetupData {
@@ -62,11 +54,11 @@ mod tests {
 
     #[test]
     fn test_ristretto() {
-        impl Scalar for RistrettoScalar {
+        impl Scalar<RistrettoPoint> for RistrettoScalar {
             fn random<R: RngCore + CryptoRng>(rng: &mut R) -> Self {
                 RistrettoScalar::random(rng)
             }
-            fn from_bytes<D: Digest>(input: Vec<u8>) -> Self {
+            fn from_bytes(input: Vec<u8>) -> Self {
                 RistrettoScalar::hash_from_bytes::<sha2::Sha512>(&input)
             }
         }

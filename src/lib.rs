@@ -12,6 +12,7 @@
 // the module that handles the steps of the Pedersen protocol
 pub(crate) mod errors;
 pub(crate) mod protocol;
+pub(crate) mod traits;
 
 //----------------
 // external crates for TESTING
