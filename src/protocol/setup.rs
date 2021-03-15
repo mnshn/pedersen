@@ -1,8 +1,6 @@
-use std::marker::PhantomData;
-
 use crate::traits::{Group, Scalar};
-
 use rand_core::{CryptoRng, RngCore};
+use std::marker::PhantomData;
 
 pub struct SetupData<T, K>
 where
@@ -45,31 +43,31 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::protocol::setup::Scalar;
+    use crate::traits::Scalar;
     use curve25519_dalek::constants::RISTRETTO_BASEPOINT_POINT;
     use curve25519_dalek::ristretto::RistrettoPoint;
     use curve25519_dalek::scalar::Scalar as RistrettoScalar;
     use rand_core::OsRng;
-    use sha2;
+    use sha2::Sha512;
+    impl Scalar<RistrettoPoint> for RistrettoScalar {
+        fn random<R: RngCore + CryptoRng>(rng: &mut R) -> Self {
+            RistrettoScalar::random(rng)
+        }
+        fn from_bytes(input: Vec<u8>) -> Self {
+            RistrettoScalar::hash_from_bytes::<Sha512>(&input)
+        }
+    }
+    impl Group for RistrettoPoint {
+        fn generator() -> Self {
+            RISTRETTO_BASEPOINT_POINT
+        }
+        fn random<R: RngCore + CryptoRng>(rng: &mut R) -> Self {
+            RistrettoPoint::random(rng)
+        }
+    }
 
     #[test]
     fn test_ristretto() {
-        impl Scalar<RistrettoPoint> for RistrettoScalar {
-            fn random<R: RngCore + CryptoRng>(rng: &mut R) -> Self {
-                RistrettoScalar::random(rng)
-            }
-            fn from_bytes(input: Vec<u8>) -> Self {
-                RistrettoScalar::hash_from_bytes::<sha2::Sha512>(&input)
-            }
-        }
-        impl Group for RistrettoPoint {
-            fn generator() -> Self {
-                RISTRETTO_BASEPOINT_POINT
-            }
-            fn random<R: RngCore + CryptoRng>(rng: &mut R) -> Self {
-                RistrettoPoint::random(rng)
-            }
-        }
         let mut rng = OsRng;
         let test_gens: SetupData<RistrettoPoint, RistrettoScalar> = SetupData::new(&mut rng);
 

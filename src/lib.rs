@@ -15,12 +15,7 @@ pub(crate) mod protocol;
 pub(crate) mod traits;
 
 //----------------
-// external crates for TESTING
+// external crates
 //----------------
 
-// an elliptic curve module
-extern crate curve25519_dalek;
-// a random nr generator
 extern crate rand_core;
-// a hash
-extern crate sha2;
