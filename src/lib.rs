@@ -1,24 +1,28 @@
+//! A crate for making and verifying commitments
+
 #![warn(missing_docs)]
-//---------------
-// public modules
-//---------------
 
-// the main commitment module
-// pub mod commit;
-//
-// the traits module
-pub mod traits;
+//----------------|
+// public modules |
+//----------------|
 
-//----------------
-// internal modules
-//----------------
+// The commitment module: this is the only module the commiter needs
+pub mod commit;
+// The setup module. Either the trusted party or the verifier needs this
+pub mod setup;
+// The verify module that the verfier uses to check the commitment after open
+pub mod verify;
 
-// the module that handles the steps of the Pedersen protocol
+//------------------|
+// internal modules |
+//------------------|
+
+// The module that handles the steps of the Pedersen protocol
 pub(crate) mod errors;
-pub(crate) mod protocol;
+// The scalar and group traits
+pub(crate) mod traits;
 
-//----------------
-// external crates
-//----------------
-
+//-----------------------|
+// external dependencies |
+//-----------------------|
 extern crate rand_core;

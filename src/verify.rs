@@ -1,4 +1,4 @@
-use crate::protocol::setup::SetupData;
+use crate::setup::SetupData;
 use crate::traits::{Group, Scalar};
 
 pub struct VerifyData<T, K>

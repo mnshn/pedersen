@@ -1,15 +1,23 @@
-use crate::protocol::setup::SetupData;
+//! The main commitment module that holds the struct that carries the commiter's data and the
+//! fuctionality to, given setup data and a message, construct a Pedersen commitment
+
+use crate::setup::SetupData;
 use crate::traits::{Group, Scalar};
 use rand_core::{CryptoRng, RngCore};
 
+/// Struct that holds the commiter's data.
 pub struct CommitData<T, K>
 where
     T: Group,
     K: Scalar<T>,
 {
+    /// The commitment that the commiter shares before the open phase
     pub commitment: T,
+    /// The setup data (group genarators) that the commiter has received
     pub setup_data: SetupData<T, K>,
+    /// A random salt that the Pedersen protocol needs to (perfectly) hide the commitment
     pub random_scalar: K,
+    /// The actual massage (as a scalar) that will be commited
     pub message: K,
 }
 
@@ -18,6 +26,7 @@ where
     T: Group,
     K: Scalar<T>,
 {
+    /// The commit function that takes the setup data and the message and returns the commitment
     pub fn commit<R: RngCore + CryptoRng>(
         setup_data: SetupData<T, K>,
         message: Vec<u8>,
