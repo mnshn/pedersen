@@ -12,20 +12,6 @@ where
     _marker: PhantomData<K>,
 }
 
-impl<T, K> Default for SetupData<T, K>
-where
-    T: Group,
-    K: Scalar<T>,
-{
-    fn default() -> Self {
-        SetupData {
-            g: T::default(),
-            h: T::default(),
-            _marker: PhantomData,
-        }
-    }
-}
-
 impl<T, K> SetupData<T, K>
 where
     T: Group,
