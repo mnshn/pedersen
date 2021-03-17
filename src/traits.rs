@@ -2,7 +2,7 @@ use rand_core::{CryptoRng, RngCore};
 use std::ops::{Add, Mul};
 
 /// Scalar trait that enforces the minimal structure we need
-pub trait Scalar<T>: Default + Copy + Mul<T, Output = T> + Mul<Output = Self> {
+pub trait Scalar<T>: Default + Copy + Mul<T, Output = T> {
     fn random<R: RngCore + CryptoRng>(rng: &mut R) -> Self;
     fn from_bytes(bytes: Vec<u8>) -> Self;
 }

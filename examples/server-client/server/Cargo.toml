@@ -15,6 +15,10 @@ rand = "0.7.3"
 tokio = { version = "0.2.23", features = ["macros", "sync"] }
 uuid = { version = "0.8.1", features = ["v4"] }
 warp = "0.2.5"
+curve25519-dalek = { version = "3" }
+rand_core = "0.5.1"
+sha2 = "0.9.3"
+derive_more = "0.99.11"
 
 [dependencies.pedersen]
 path = "../../../"

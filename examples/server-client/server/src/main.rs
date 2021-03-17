@@ -5,6 +5,7 @@ extern crate log;
 mod utils;
 
 mod handle_request;
+mod traits;
 mod types;
 
 use http::HeaderValue;

@@ -13,6 +13,8 @@ pub mod setup;
 // The verify module that the verfier uses to check the commitment after open
 pub mod verify;
 
+pub mod traits;
+
 //------------------|
 // internal modules |
 //------------------|
@@ -20,7 +22,7 @@ pub mod verify;
 // The module that handles the steps of the Pedersen protocol
 pub(crate) mod errors;
 // The scalar and group traits
-pub(crate) mod traits;
+// pub(crate) mod traits;
 
 //-----------------------|
 // external dependencies |
