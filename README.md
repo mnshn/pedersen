@@ -23,3 +23,54 @@ Given D and a message m on C, commiter commits to m as follows:
 **Verifier**:
 
 1. Given (c,m,b) checks that indeed c = mG + bH
+
+### How to import:
+
+```
+use derive_more::Add;
+use std::ops::Mul;
+use pedersen::traits::{Group, Scalar};
+use std::ops::Deref;
+
+#[derive(Default, Clone, Copy, PartialEq, Eq, Add)]
+struct WrapPoint(RistrettoPoint);
+#[derive(Default, Clone, Copy, PartialEq, Eq)]
+struct WrapScalar(RistrettoScalar);
+
+impl Mul<WrapPoint> for WrapScalar {
+    type Output = WrapPoint;
+    fn mul(self, rhs: WrapPoint) -> WrapPoint {
+        WrapPoint(self.0 * rhs.0)
+    }
+}
+
+impl Deref for WrapPoint {
+    type Target = RistrettoPoint;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+impl Deref for WrapScalar {
+    type Target = RistrettoScalar;
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl Scalar<WrapPoint> for WrapScalar {
+    fn random<R: RngCore + CryptoRng>(rng: &mut R) -> Self {
+        Self(RistrettoScalar::random(rng))
+    }
+    fn from_bytes(input: Vec<u8>) -> Self {
+        Self(RistrettoScalar::hash_from_bytes::<Sha512>(&input))
+    }
+}
+impl Group for WrapPoint {
+    fn generator() -> Self {
+        Self(RISTRETTO_BASEPOINT_POINT)
+    }
+    fn random<R: RngCore + CryptoRng>(rng: &mut R) -> Self {
+        Self(RistrettoPoint::random(rng))
+    }
+}
+```
